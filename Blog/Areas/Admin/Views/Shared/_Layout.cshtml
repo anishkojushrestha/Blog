@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Identity;
-@model Blog.Models.ApplicationUser
 @inject UserManager<ApplicationUser> _userManager; 
 @{
     var loggedInUser = new ApplicationUser();
@@ -20,6 +19,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="~/dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -50,15 +50,16 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" asp-action="Index" asp-controller="Post" asp-area="Admin">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Post</span></a>
             </li>
-            <hr class="sidebar-divider my-0">
+            @if(User.IsInRole("Admin")){
+                 <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" asp-action="Index" asp-controller="User" asp-area="Admin">
                     <i class="fas fa-fw fa-user"></i>
                     <span>User</span></a>
             </li>
@@ -71,7 +72,7 @@
                 Interface
             </div>
 
-            
+
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -90,6 +91,8 @@
                     </div>
                 </div>
             </li>
+            }
+           
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -259,8 +262,15 @@
     <!-- Page level custom scripts -->
     <script src="~/dashboard/js/demo/chart-area-demo.js"></script>
     <script src="~/dashboard/js/demo/chart-pie-demo.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#myTable').DataTable();
+        });
+    </script>
     @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+    
 </body>
 
 </html>

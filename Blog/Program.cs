@@ -16,6 +16,11 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddDefaultTokenPro
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<IDbInitializer, Dbinitializer>();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/login";
+    options.AccessDeniedPath = "/AccessDenied";
+});
 var app = builder.Build();
 DataSeeding();
 // Configure the HTTP request pipeline.
