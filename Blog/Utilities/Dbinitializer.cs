@@ -73,7 +73,7 @@ namespace Blog.Utilities
                     Slug = "PrivayPage"
                 }
             };
-                _context.pages.AddRange(listOfPages);
+                _context.pages!.AddRange(listOfPages);
                 _context.SaveChanges();
 
             }
