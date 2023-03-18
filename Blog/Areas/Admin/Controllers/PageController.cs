@@ -141,6 +141,7 @@ namespace Blog.Areas.Admin.Controllers
             _notyfService.Success("Privacy updated succesfully");
             return RedirectToAction("Privacy", "Page", new { area = "Admin" });
         }
+
         private string UploadFile(IFormFile file)
         {
             string uniqueFileName = "";

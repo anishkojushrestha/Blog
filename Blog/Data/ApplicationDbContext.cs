@@ -14,5 +14,6 @@ namespace Blog.Data
         public DbSet<ApplicationUser>? applicationUsers { get; set; }
         public DbSet<Post>? posts { get; set; }
         public DbSet<Page>? pages { get; set; }
+        public DbSet<Setting>? settings { get; set; }
     }
 }
