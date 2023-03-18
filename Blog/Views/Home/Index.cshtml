@@ -32,7 +32,7 @@
             @foreach(var post in Model.posts!)
             {
                     <div class="post-preview">
-            <a href="post.html">
+            <a asp-controller="Blog" asp-action="Post" asp-route-slug="@post.Slug">
               <h2 class="post-title">
                 @post.Title
               </h2>
