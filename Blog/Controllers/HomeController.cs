@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Configuration;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace Blog.Controllers
 {
@@ -19,12 +20,13 @@ namespace Blog.Controllers
             this._context = _context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var setting = _context.settings!.ToList();
             var vm = new HomeVM();
-
-            vm.posts = _context.posts.Include(x => x.ApplicationUser).ToList();
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+            vm.posts = await _context.posts!.Include(x => x.ApplicationUser).OrderByDescending(x => x.CreatedDate).ToPagedListAsync(pageNumber, pageSize);
             vm.Title = setting[0].Title;
             vm.ShortDescription = setting[0].ShortDescription;
             vm.ThumbnailUrl = setting[0].ThumbnailUrl;

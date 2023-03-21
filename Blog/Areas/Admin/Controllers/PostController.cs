@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using X.PagedList;
 
 namespace Blog.Areas.Admin.Controllers
 {
@@ -30,7 +31,7 @@ namespace Blog.Areas.Admin.Controllers
             this._webHostEnvironment = _webHostEnvironment;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var listOfPosts = new List<Post>();
 
@@ -53,7 +54,9 @@ namespace Blog.Areas.Admin.Controllers
                 ThumbnailUrl = x.ThumbnailUrl,
                 AuthorName = x.ApplicationUser!.FirstName + " " + x.ApplicationUser.LastName
             }).ToList();
-            return View(listOfPostsVM);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(await listOfPostsVM.OrderByDescending(x => x.CreatedDate).ToPagedListAsync(pageNumber, pageSize));
         }
 
         [HttpGet]

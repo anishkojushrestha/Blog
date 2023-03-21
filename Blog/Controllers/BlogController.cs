@@ -14,7 +14,7 @@ namespace Blog.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("[controller]/{slug}")]
         public async Task<IActionResult> Post(string slug)
         {
             if (slug == null)
